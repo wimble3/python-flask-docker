@@ -1,0 +1,22 @@
+# Environments
+.venv
+
+.idea/
+
+#Cache
+*__pycache__/
+.pytest_cache/
+swagger-spec.yaml
+
+#Enviroment
+env.sh
+
+#DataBase
+*.db
+
+.DS_Store
+
+local.conf
+
+*.hypothesis/
+tests/meta/

@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: local.Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./app/:/app/
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+
+  telethon:
+    build:
+      context: .
+      dockerfile: telethon.local.Dockerfile
+    volumes:
+      - ./app/:/app/
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=dbtest
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - "7777:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5052:80"
+    volumes:
+      - pgadmin4:/var/pgadmin
+    depends_on:
+      - db
+
+
+volumes:
+  postgres:
+  pgadmin4:
